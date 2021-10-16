@@ -20,14 +20,34 @@ import blog4 from '../assets/images/blog-4.png'
 
 // markup
 
+const initNetlifyIdentity = () => {
+  const script = document.createElement("script");
+  script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+  script.async = true;
+  document.body.appendChild(script)
+  console.log("netlifyIdentity")
+}
+const openNetlifyModal = () => {
+  const netlifyIdentity = window.netlifyIdentity;
+  
+  if(netlifyIdentity){
+    netlifyIdentity.open()
+  }else{
+    console.log("netlifyIdentity is not defined")
+  }
+
+}
 const IndexPage = () => {
   React.useEffect(() => {
+    initNetlifyIdentity()
     AOS.init({
       duration: 1000,
       delay: 50,
       once: true
     });
     AOS.refresh();
+
+   
   }, [])
   //   const data = useStaticQuery(graphql`
   // {
@@ -48,7 +68,7 @@ const IndexPage = () => {
       <section className="hero-section">
         <Container fluid>
           <div className="hero-content">
-            <Button variant="outline-light" className="contact-btn">Contact Us</Button>{' '}
+            <Button variant="outline-light" className="contact-btn" onClick={() => openNetlifyModal()}>Contact Us</Button>{' '}
             <div className="text-center my-2">
               <span className="mr-3">
                 <a href="#"><img src={fb} alt="fb-icon" width="40" height="40" /></a></span>
