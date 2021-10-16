@@ -16,24 +16,30 @@ import blog1 from '../assets/images/blog-1.png'
 import blog2 from '../assets/images/blog-2.png'
 import blog3 from '../assets/images/blog-3.png'
 import blog4 from '../assets/images/blog-4.png'
-const netlifyIdentity = require("netlify-identity-widget");
 // import "aos/dist/aos.css";
 
 // markup
 
-// const initNetlifyIdentity = () => {
-//   const script = document.createElement("script");
-//   script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
-//   script.async = true;
-//   document.body.appendChild(script)
-//   console.log("netlifyIdentity")
-// }
+const initNetlifyIdentity = () => {
+  const script = document.createElement("script");
+  script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+  script.async = true;
+  document.body.appendChild(script)
+  console.log("netlifyIdentity")
+}
+const openNetlifyModal = () => {
+  const netlifyIdentity = window.netlifyIdentity;
+  
+  if(netlifyIdentity){
+    netlifyIdentity.open()
+  }else{
+    console.log("netlifyIdentity is not defined")
+  }
 
+}
 const IndexPage = () => {
   React.useEffect(() => {
-    netlifyIdentity.on('init', user => console.log('init', user));
-netlifyIdentity.on('login', user => console.log('login', user));
-netlifyIdentity.on('logout', () => console.log('Logged out'));
+    initNetlifyIdentity()
     AOS.init({
       duration: 1000,
       delay: 50,
@@ -42,17 +48,7 @@ netlifyIdentity.on('logout', () => console.log('Logged out'));
     AOS.refresh();
 
    
-  }, [])
-  const openNetlifyModal = () => {
-    // const netlifyIdentity = window.netlifyIdentity;
-    
-    if(netlifyIdentity){
-      netlifyIdentity.open()
-    }else{
-      console.log("netlifyIdentity is not defined")
-    }
-  
-  }
+  }, [initNetlifyIdentity])
   //   const data = useStaticQuery(graphql`
   // {
   //   wpPage(title: {eq: "Test"}) {
@@ -72,7 +68,7 @@ netlifyIdentity.on('logout', () => console.log('Logged out'));
       <section className="hero-section">
         <Container fluid>
           <div className="hero-content">
-            <Button variant="outline-light" className="contact-btn" onClick={() => netlifyIdentity.open()}>Contact Us</Button>{' '}
+            <Button variant="outline-light" className="contact-btn" onClick={() => openNetlifyModal()}>Contact Us</Button>{' '}
             <div className="text-center my-2">
               <span className="mr-3">
                 <a href="#"><img src={fb} alt="fb-icon" width="40" height="40" /></a></span>
