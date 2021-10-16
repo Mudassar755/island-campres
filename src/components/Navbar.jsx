@@ -31,7 +31,7 @@ const Header = () => {
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <div className="container">
           <Navbar.Brand>
-            <Link to="home" className="navbar-brand">
+            <Link to="home" href="home" className="navbar-brand">
               TypoCode
             </Link>
           </Navbar.Brand>

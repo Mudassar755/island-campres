@@ -64,7 +64,9 @@
 .iframe-wrapper{
   height: 500px;
 }
-
+.nav-link{
+  cursor: pointer !important;
+}
 @media screen and (max-width: 667px) {
   .left-col{
     display: none !important;
