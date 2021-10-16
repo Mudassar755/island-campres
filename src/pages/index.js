@@ -16,30 +16,31 @@ import blog1 from '../assets/images/blog-1.png'
 import blog2 from '../assets/images/blog-2.png'
 import blog3 from '../assets/images/blog-3.png'
 import blog4 from '../assets/images/blog-4.png'
+import { Link } from 'react-scroll';
 // import "aos/dist/aos.css";
 
 // markup
 
-const initNetlifyIdentity = () => {
-  const script = document.createElement("script");
-  script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
-  script.async = true;
-  document.body.appendChild(script)
-  console.log("netlifyIdentity")
-}
-const openNetlifyModal = () => {
-  const netlifyIdentity = window.netlifyIdentity;
+// const initNetlifyIdentity = () => {
+//   const script = document.createElement("script");
+//   script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+//   script.async = true;
+//   document.body.appendChild(script)
+//   console.log("netlifyIdentity")
+// }
+// const openNetlifyModal = () => {
+//   const netlifyIdentity = window.netlifyIdentity;
   
-  if(netlifyIdentity){
-    netlifyIdentity.open()
-  }else{
-    console.log("netlifyIdentity is not defined")
-  }
+//   if(netlifyIdentity){
+//     netlifyIdentity.open()
+//   }else{
+//     console.log("netlifyIdentity is not defined")
+//   }
 
-}
+// }
 const IndexPage = () => {
   React.useEffect(() => {
-    initNetlifyIdentity()
+    // initNetlifyIdentity()
     AOS.init({
       duration: 1000,
       delay: 50,
@@ -48,7 +49,7 @@ const IndexPage = () => {
     AOS.refresh();
 
    
-  }, [initNetlifyIdentity])
+  }, [])
   //   const data = useStaticQuery(graphql`
   // {
   //   wpPage(title: {eq: "Test"}) {
@@ -65,10 +66,11 @@ const IndexPage = () => {
       {/*===============================================
         					Start Hero Content Area Design
                 ================================================ */}
-      <section className="hero-section">
+      <section className="hero-section" id="home">
+        <div className="overlay"></div>
         <Container fluid>
           <div className="hero-content">
-            <Button variant="outline-light" className="contact-btn" onClick={() => openNetlifyModal()}>Contact Us</Button>{' '}
+            <Link to="contact"><Button variant="outline-light" className="contact-btn">Contact Us</Button></Link>
             <div className="text-center my-2">
               <span className="mr-3">
                 <a href="#"><img src={fb} alt="fb-icon" width="40" height="40" /></a></span>
@@ -86,11 +88,11 @@ const IndexPage = () => {
                     Start About Content Area Design
             ================================================ */}
 
-      <section className="about-section">
+      <section className="about-section" id="about">
         <Container>
           <Row>
             <h2 className="text-center w-100 my-5"> About Us</h2>
-            <Col xs={12} sm={6} md={6} lg={6} >
+            <Col className="left-col" xs={12} sm={6} md={6} lg={6} >
               <div className="about-img-1"> <img src={aboutImg1} /></div>
               <div className="about-img-2"><img src={aboutImg2} /></div>
             </Col>
@@ -169,7 +171,7 @@ const IndexPage = () => {
       <section className="reates-section">
         <Container>
           <h2 className="text-center my-5">Rates</h2>
-          <div className="p-3 w-75">
+          <div className="p-3 w-75 p-sm-1">
             <h3>Rental Rates</h3>
             <p>
               OUR RATES ARE SUBJECT TO CHANGE BASED ON SEASONAL DEMAND, PLEASE CHECK OUR VEHICLE AVAILABILITY OR CONTACT US DIRECTLY WITH ANY QUESTIONS YOU MIGHT HAVE.
@@ -207,11 +209,11 @@ const IndexPage = () => {
                     Start Rentals Content Area Design
             ================================================ */}
 
-      <section className="rental-section">
+      <section className="blog-section" id="blog">
         <Container className="text-center">
           <h2 className="text-center my-5">Blog</h2>
           <Row xs={1} md={2} className="g-4 mt-3">
-            <Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
               <Card>
                 <Card.Img variant="top" src={blog1} />
                 <Card.Body>
@@ -223,7 +225,7 @@ const IndexPage = () => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
               <Card>
                 <Card.Img variant="top" src={blog2} />
                 <Card.Body>
@@ -237,7 +239,7 @@ const IndexPage = () => {
             </Col>
           </Row>
           <Row xs={1} md={2} className="g-4 mt-3">
-            <Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
               <Card>
                 <Card.Img variant="top" src={blog3} />
                 <Card.Body>
@@ -249,7 +251,7 @@ const IndexPage = () => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
               <Card>
                 <Card.Img variant="top" src={blog4} />
                 <Card.Body>
@@ -274,7 +276,7 @@ const IndexPage = () => {
                     Start Contact Content Area Design
             ================================================ */}
 
-      <section className="rental-section">
+      <section className="contact-section" id="contact">
         <Container>
           <h2 className="text-center my-5">Contact Us</h2>
           <Form className="mt-4 text-center">

@@ -1,14 +1,37 @@
-import { Link } from 'gatsby'
-import React from 'react'
+// import { Link } from 'gatsby'
+import React,{useEffect} from 'react'
 import logo from '../assets/images/logo/logo.png'
-import {Nav, Navbar, Container} from 'react-bootstrap'
+import {Nav, Navbar, Container, Button} from 'react-bootstrap'
+import { Link } from 'react-scroll';
+
+const initNetlifyIdentity = () => {
+  const script = document.createElement("script");
+  script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+  script.async = true;
+  document.body.appendChild(script)
+  console.log("netlifyIdentity")
+}
+const openNetlifyModal = () => {
+  const netlifyIdentity = window.netlifyIdentity;
+  
+  if(netlifyIdentity){
+    netlifyIdentity.open()
+  }else{
+    console.log("netlifyIdentity is not defined")
+  }
+
+}
 
 const Header = () => {
+  useEffect(() => {
+    initNetlifyIdentity()
+
+  },[initNetlifyIdentity])
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <div className="container">
           <Navbar.Brand>
-            <Link to="/" className="navbar-brand">
+            <Link to="home" className="navbar-brand">
               TypoCode
             </Link>
           </Navbar.Brand>
@@ -19,14 +42,14 @@ const Header = () => {
               <Nav.Item>
                 <Nav.Link>
                   {" "}
-                  <Link to="/" className="nav-link">
+                  <Link to="home" className="nav-link">
                     Home
                   </Link>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Link>
                 {" "}
-                <Link to="/about" className="nav-link">
+                <Link to="about" className="nav-link">
                   About Us
                 </Link>
               </Nav.Link>
@@ -38,13 +61,13 @@ const Header = () => {
               </Nav.Link> */}
               <Nav.Link>
                 {" "}
-                <Link to="/blogs" className="nav-link">
+                <Link to="blog" className="nav-link">
                   Blogs
                 </Link>
               </Nav.Link>
               <Nav.Link>
                 {" "}
-                <Link to="/contact" className="nav-link">
+                <Link to="contact" className="nav-link">
                   Contact Us
                 </Link>
               </Nav.Link>
@@ -60,6 +83,7 @@ const Header = () => {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown> */}
+              <Button variant="outline-dark" onClick={() => openNetlifyModal()}>Login / Signup</Button>
             </Nav>
             {/* <Nav>
               <Nav.Link href="#deets">More deets</Nav.Link>
