@@ -4,12 +4,12 @@ module.exports = {
     title: "gatsby-starter-scss",
   },
   plugins: [
-    {
-      resolve: "gatsby-source-wordpress",
-      options: {
-        url: "http://localhost/smarthome/graphql.",
-      },
-    },
+    // {
+    //   resolve: "gatsby-source-wordpress",
+    //   options: {
+    //     url: "http://localhost/smarthome/graphql.",
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-sharp`,
       options: {

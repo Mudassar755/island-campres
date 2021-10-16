@@ -29,19 +29,19 @@ const IndexPage = () => {
     });
     AOS.refresh();
   }, [])
-    const data = useStaticQuery(graphql`
-  {
-    wpPage(title: {eq: "Test"}) {
-    title
-    content
-  }
-  }
-  `)
-    console.log("Dataaaa", data)
+  //   const data = useStaticQuery(graphql`
+  // {
+  //   wpPage(title: {eq: "Test"}) {
+  //   title
+  //   content
+  // }
+  // }
+  // `)
+  //   console.log("Dataaaa", data)
   
   return (
     <Layout>
-      <div dangerouslySetInnerHTML={{__html: data.wpPage.content}}></div>
+      {/* <div dangerouslySetInnerHTML={{__html: data.wpPage.content}}></div> */}
       {/*===============================================
         					Start Hero Content Area Design
                 ================================================ */}
