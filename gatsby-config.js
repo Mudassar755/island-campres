@@ -4,12 +4,12 @@ module.exports = {
     title: "gatsby-starter-scss",
   },
   plugins: [
-    // {
-    //   resolve: "gatsby-source-wordpress",
-    //   options: {
-    //     url: "http://localhost/smarthome/graphql.",
-    //   },
-    // },
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        url: "https://w47.4b7.myftpupload.com/graphql.",
+      },
+    },
     {
       resolve: `gatsby-plugin-sharp`,
       options: {

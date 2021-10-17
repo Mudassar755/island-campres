@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, {useState} from "react"
 
 import Layout from "../components/Layout"
 import AOS from 'aos';
@@ -19,25 +19,12 @@ import blog4 from '../assets/images/blog-4.png'
 import { Link } from 'react-scroll';
 // import "aos/dist/aos.css";
 
-// markup
+const encode = (data) => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
 
-// const initNetlifyIdentity = () => {
-//   const script = document.createElement("script");
-//   script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
-//   script.async = true;
-//   document.body.appendChild(script)
-//   console.log("netlifyIdentity")
-// }
-// const openNetlifyModal = () => {
-//   const netlifyIdentity = window.netlifyIdentity;
-  
-//   if(netlifyIdentity){
-//     netlifyIdentity.open()
-//   }else{
-//     console.log("netlifyIdentity is not defined")
-//   }
-
-// }
 const IndexPage = () => {
   React.useEffect(() => {
     // initNetlifyIdentity()
@@ -48,18 +35,109 @@ const IndexPage = () => {
     });
     AOS.refresh();
 
-   
+
   }, [])
-  //   const data = useStaticQuery(graphql`
-  // {
-  //   wpPage(title: {eq: "Test"}) {
-  //   title
-  //   content
-  // }
-  // }
-  // `)
-  //   console.log("Dataaaa", data)
-  
+  const data = useStaticQuery(graphql`
+  {
+    wpPage(title: {eq: "Home"}) {
+    about {
+      aboutTitle
+      aboutDescription
+      fieldGroupName
+    }
+    rates {
+      rentalRates
+      fieldGroupName
+      title
+    }
+  }
+  blogs:wpCategory(name: {eq: "Blog"}) {
+    name
+    posts {
+      nodes {
+        title
+        slug
+        content
+        post {
+          shortDescription
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            srcSet
+          }
+        }
+      }
+    }
+  }
+  tours:wpCategory(name: {eq: "Tours"}) {
+    name
+    posts {
+      nodes {
+        title
+        slug
+        content
+        post {
+          shortDescription
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            srcSet
+          }
+        }
+      }
+    }
+  }
+  }
+  `)
+  console.log("Dataaaa", data && data.wpPage)
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  })
+
+  const { name, email, message } = formData;
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
+  };
+
+  const handleSubmit = e => {
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", ...formData })
+    })
+      .then((res) => {
+        console.log("res=>>", res)
+        // if(res)
+        // toast.success("Your response submitted successfully!", {
+        //     position: "top-right",
+        //     autoClose: 5000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        // });
+      })
+      .catch(error => console.error(error));
+    resetForm()
+
+
+    e.preventDefault();
+  };
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
   return (
     <Layout>
       {/* <div dangerouslySetInnerHTML={{__html: data.wpPage.content}}></div> */}
@@ -97,8 +175,8 @@ const IndexPage = () => {
               <div className="about-img-2"><img src={aboutImg2} /></div>
             </Col>
             <Col xs={12} sm={6} md={6} lg={6} className="p-5">
-              <h2>JOSHUA TREE & THE MOJAVE</h2>
-              <p>With dramatic contrasts of land and sea, striking desert landscapes, remote wilderness, and vibrant culture, Baja has been an icon of overland travel for generations. We invite you to join us in on our guided tour of the Baja Peninsula, with trips focusing</p>
+              <h2>{data && data.wpPage.about && data.wpPage.about.aboutTitle}</h2>
+              <p>{data && data.wpPage.about && data.wpPage.about.aboutDescription}</p>
             </Col>
           </Row>
         </Container>
@@ -136,27 +214,16 @@ const IndexPage = () => {
       <section className="tour-section">
         <Container>
           <h2 className="text-center my-5">Tours</h2>
-          <Row className="mt-5">
-            <Col sm={12} md={6}><img src={tour1} className="w-100" /></Col>
-            <Col sm={12} md={6}>
-              <h3>DEATH VALLEY ASTROPHOTOGRAPHY WORKSHOP WITH ANDY BEST - GUIDED TOUR</h3>
-              <p>Join National Geographic photographer, Sony Alpha Ambassador, and ROAM founding member, Andy Best, for a unique photographic workshop and guided overland tour through Death Valley in search of pristine views of the night sky and with one-on-one photographic instruction.</p>
-            </Col>
-          </Row>
-          <Row className="mt-5">
-            <Col sm={12} md={6}><img src={tour2} className="w-100" /></Col>
-            <Col sm={12} md={6}>
-              <h3>DEATH VALLEY ASTROPHOTOGRAPHY WORKSHOP WITH ANDY BEST - GUIDED TOUR</h3>
-              <p>Join National Geographic photographer, Sony Alpha Ambassador, and ROAM founding member, Andy Best, for a unique photographic workshop and guided overland tour through Death Valley in search of pristine views of the night sky and with one-on-one photographic instruction.</p>
-            </Col>
-          </Row>
-          <Row className="mt-5">
-            <Col sm={12} md={6}><img src={tour3} className="w-100" /></Col>
-            <Col sm={12} md={6}>
-              <h3>DEATH VALLEY ASTROPHOTOGRAPHY WORKSHOP WITH ANDY BEST - GUIDED TOUR</h3>
-              <p>Join National Geographic photographer, Sony Alpha Ambassador, and ROAM founding member, Andy Best, for a unique photographic workshop and guided overland tour through Death Valley in search of pristine views of the night sky and with one-on-one photographic instruction.</p>
-            </Col>
-          </Row>
+          {data && data.tours.posts.nodes.length && data.tours.posts.nodes.map((tour) => (
+            <Row className="mt-5">
+              <Col sm={12} md={6}><img src={tour.featuredImage.node.sourceUrl} className="w-100" /></Col>
+              <Col sm={12} md={6}>
+                <h3>{tour.title}</h3>
+                <p>{tour.post.shortDescription}</p>
+                {/* <p dangerouslySetInnerHTML={{_html: tour.content}}></p> */}
+              </Col>
+            </Row>
+          ))}
         </Container>
       </section>
 
@@ -172,31 +239,9 @@ const IndexPage = () => {
         <Container>
           <h2 className="text-center my-5">Rates</h2>
           <div className="p-3 w-75 p-sm-1">
-            <h3>Rental Rates</h3>
-            <p>
-              OUR RATES ARE SUBJECT TO CHANGE BASED ON SEASONAL DEMAND, PLEASE CHECK OUR VEHICLE AVAILABILITY OR CONTACT US DIRECTLY WITH ANY QUESTIONS YOU MIGHT HAVE.
-              <br />
-              PLEASE NOTE, RATES ARE DETERMINED AS FOLLOWS:
-            </p>
-            <ul>
-              <li>Rentals are assessed on a daily basis, by the calendar day, and not on an hourly basis.</li>
-              <li>Each rental offers 150 miles free per day (taken as a total for the entire rental period), with excess miles charged at $ .50 a mile, and an additional mileage supplement of 100 extra miles per day is available for $30 a day.</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-            </ul>
-            <h5 className="my-3">Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</h5>
-            <ul>
-              <li>Rentals are assessed on a daily basis, by the calendar day, and not on an hourly basis.</li>
-              <li>Each rental offers 150 miles free per day (taken as a total for the entire rental period), with excess miles charged at $ .50 a mile, and an additional mileage supplement of 100 extra miles per day is available for $30 a day.</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-              <li>Minimum rental duration is 3 days (San Francisco) and 5 days (Las Vegas).</li>
-            </ul>
+            <h3>{data && data.wpPage.rates && data.wpPage.rates.title}</h3>
+            <div dangerouslySetInnerHTML={{ __html: data && data.wpPage.rates && data.wpPage.rates.rentalRates }}></div>
+
           </div>
         </Container>
       </section>
@@ -213,56 +258,19 @@ const IndexPage = () => {
         <Container className="text-center">
           <h2 className="text-center my-5">Blog</h2>
           <Row xs={1} md={2} className="g-4 mt-3">
-            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
-              <Card>
-                <Card.Img variant="top" src={blog1} />
-                <Card.Body>
-                  <Card.Title>Card title</Card.Title>
-                  <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit longer.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
-              <Card>
-                <Card.Img variant="top" src={blog2} />
-                <Card.Body>
-                  <Card.Title>Card title</Card.Title>
-                  <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit longer.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-          <Row xs={1} md={2} className="g-4 mt-3">
-            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
-              <Card>
-                <Card.Img variant="top" src={blog3} />
-                <Card.Body>
-                  <Card.Title>Card title</Card.Title>
-                  <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit longer.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xs={12} sm={12} md={6} lg={6} className="my-3">
-              <Card>
-                <Card.Img variant="top" src={blog4} />
-                <Card.Body>
-                  <Card.Title>Card title</Card.Title>
-                  <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit longer.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
+            {data && data.blogs.posts.nodes.length && data.blogs.posts.nodes.map((blog) => (
+              <Col xs={12} sm={12} md={6} lg={6} className="my-3">
+                <Card>
+                  <Card.Img variant="top" src={blog.featuredImage.node.sourceUrl} />
+                  <Card.Body>
+                    <Card.Title>{blog.title}</Card.Title>
+                    <Card.Text>
+                      {blog.post.shortDescription}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
           </Row>
           <Button variant="dark" className="my-5">Load More</Button>
         </Container>
@@ -279,21 +287,48 @@ const IndexPage = () => {
       <section className="contact-section" id="contact">
         <Container>
           <h2 className="text-center my-5">Contact Us</h2>
-          <Form className="mt-4 text-center">
+          <Form className="mt-4 text-center" onSubmit={(e) => handleSubmit(e)}>
             <Row>
               <Col>
-                <Form.Control placeholder="First name" type="email" placeholder="Enter email" className="mt-2" />
+                <Form.Control
+                 className="form-control"
+                 type="text"
+                 name="name"
+                 value={name}
+                 onChange={(e) => handleChange(e)}
+                 placeholder="Full name"
+                 required
+                 className="mt-2" 
+                 />
               </Col>
               <Col>
-                <Form.Control placeholder="Last name" type="password" placeholder="Password" className="mt-2"/>
+                <Form.Control 
+                className="form-control"
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => handleChange(e)}
+                placeholder="hello@domain.com"
+                required
+                className="mt-2" />
               </Col>
             </Row>
             {/* <Form.Control type="email" placeholder="Enter email" className="mt-2 w-40" /> */}
 
             {/* <Form.Control type="password" placeholder="Password" className="mt-2 w-40" /> */}
-            <Row>
+            <Row className="mt-4">
               <Col>
-                <Form.Control as="textarea" rows={3} className="mt-4" />
+                <Form.Control 
+                as="textarea" 
+                rows={3} 
+                className="form-control"
+                name="message"
+                value={message}
+                onChange={(e) => handleChange(e)}
+                rows={5}
+                placeholder="Tell us what we can help you with!"
+                required
+                />
               </Col>
             </Row>
             <Button variant="dark" type="submit" className="mt-5">

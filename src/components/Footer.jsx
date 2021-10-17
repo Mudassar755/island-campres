@@ -19,15 +19,18 @@ const Footer = () => {
             </p>
             <p>
               <span>
-                <img src={phone} />
-              </span>{" "}
-              <strong>8 800 888 80 80</strong>
+                <a href="#">Terms Of Services</a>
+              </span>
             </p>
             <p>
               <span>
-                <img src={skype} />
-              </span>{" "}
-              <strong>Logo.Skype</strong>
+                <a href="#">Privacy Policy</a>
+                </span>
+            </p>
+            <p>
+              <span>
+                <a href="#">FAQs</a>
+                </span>
             </p>
             <div>
               <span>.LOGO</span>
