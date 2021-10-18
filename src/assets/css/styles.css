@@ -67,6 +67,14 @@
 .nav-link{
   cursor: pointer !important;
 }
+.btn-link{
+  text-decoration: none;
+  color: #000;
+}
+.btn-link:hover{
+  text-decoration: none;
+  color: #000;
+}
 @media screen and (max-width: 667px) {
   .left-col{
     display: none !important;

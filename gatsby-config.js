@@ -14,6 +14,20 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-instagram-all`,
+      options: {
+        access_token: "IGQVJWaVJKWkhGcUozREd3SnlFUmZASazYyOW44UmQzbXVOSVAyQmtqakd6MWFZAYXlDaWdxNWJYdHFFd21pQUpBRTlUcDhINVlVMmQxbmsxOV9SSUFwY0ctZADhkZAV9KWEtlbmJVczFpTTNsZA0xSMEowTwZDZD"
+      }
+    },
+    // {
+    //   resolve: `gatsby-source-instagram`,
+    //   options: {
+    //     type: `user-profile`,
+    //   username: `mudassarali75`,
+    //   access_token:"IGQVJWaVJKWkhGcUozREd3SnlFUmZASazYyOW44UmQzbXVOSVAyQmtqakd6MWFZAYXlDaWdxNWJYdHFFd21pQUpBRTlUcDhINVlVMmQxbmsxOV9SSUFwY0ctZADhkZAV9KWEtlbmJVczFpTTNsZA0xSMEowTwZDZD"
+    //   },
+    // },
+    {
       resolve: `gatsby-plugin-sharp`,
       options: {
         // Defaults used for gatsbyImageData and StaticImage
