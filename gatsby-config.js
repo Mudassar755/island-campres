@@ -8,6 +8,9 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         url: "https://w47.4b7.myftpupload.com/graphql.",
+        production: {
+          allow404Images: true,
+        },
       },
     },
     {
