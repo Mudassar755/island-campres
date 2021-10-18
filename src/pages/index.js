@@ -25,6 +25,10 @@ const IndexPage = () => {
       once: true
     });
     AOS.refresh();
+    var script = document.createElement("script");
+      script.src = "https://d3cuf6g1arkgx6.cloudfront.net/sdk/wheelbase.min.js";
+      script.async = true;
+      document.body.appendChild(script)
 
 
   }, [])
@@ -52,7 +56,7 @@ const IndexPage = () => {
   }
   `)
   //  const instaPics = useInstagram();
-  console.log("instaPics", data)
+  // console.log("instaPics", data)
 
   return (
     <Layout>
@@ -103,9 +107,10 @@ const IndexPage = () => {
       <section className="rental-section">
         <Container>
           <h2 className="text-center my-3">Rentlas</h2>
-          <div className="iframe-wrapper">
+          <div id="outdoorsy-book-now-container" data-owner="2008693" data-newfilters="true" data-calendar="false" data-color="000000"></div>
+          {/* <div className="iframe-wrapper">
             <img src={rental} alt="rental iframe" className="h-100 w-100" />
-          </div>
+          </div> */}
         </Container>
       </section>
 
