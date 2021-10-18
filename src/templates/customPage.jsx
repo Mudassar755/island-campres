@@ -2,15 +2,13 @@ import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap'
 import Layout from '../components/Layout';
 
-const BlogPost = ({ pageContext: { data } }) => {
-    // console.log("data==>>>", data)
+const CustomPage = ({ pageContext: { data } }) => {
     return (
         <Layout>
-        <Container>
+        <Container className="my-5">
             <Row>
                 <Col>
-                <h1 className="mt-5">{data.title}</h1>
-                <img src={data.featuredImage.node.sourceUrl} height="500" className="w-75 my-5" />
+                <h1 className="mb-5">{data.title}</h1>
                 <div dangerouslySetInnerHTML={{__html: data.content}}></div>
                 </Col>
                 </Row>
@@ -19,4 +17,4 @@ const BlogPost = ({ pageContext: { data } }) => {
     )
 }
 
-export default BlogPost
+export default CustomPage
