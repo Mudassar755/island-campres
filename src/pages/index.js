@@ -19,12 +19,18 @@ import blog4 from '../assets/images/blog-4.png'
 import { Link } from 'react-scroll';
 // import "aos/dist/aos.css";
 
-const encode = (data) => {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-}
+// const encode = (data) => {
+//   return Object.keys(data)
+//     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+//     .join("&");
+// }
 
+// function encode(data) {
+//   console.log("data", data)
+//   return Object.keys(data)
+//       .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+//       .join("&")
+// }
 const IndexPage = () => {
   React.useEffect(() => {
     // initNetlifyIdentity()
@@ -109,32 +115,38 @@ const IndexPage = () => {
     });
   };
 
-  const handleSubmit = e => {
+  const encode = (data) => {
+    console.log("datataa", data)
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
 
+  const handleSubmit = e => {
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({ "form-name": "contact", ...formData })
     })
-      .then((res) => {
-        console.log("res=>>", res)
-        // if(res)
-        // toast.success("Your response submitted successfully!", {
-        //     position: "top-right",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        // });
-      })
-      .catch(error => console.error(error));
+    .then((res) => {
+      console.log("res=>>", res)
+    })
+    .catch(error => console.error(error));
     resetForm()
-
-
     e.preventDefault();
   };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   fetch("/", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //     body: encode({
+  //       "form-name": event.target.getAttribute("name"),
+  //       ...name
+  //     })
+  //   }).then(() => navigate("/thank-you/")).catch(error => alert(error))
+  // }
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -287,9 +299,16 @@ const IndexPage = () => {
       <section className="contact-section" id="contact">
         <Container>
           <h2 className="text-center my-5">Contact Us</h2>
-          <Form className="mt-4 text-center" onSubmit={(e) => handleSubmit(e)}>
+          <Form 
+          onSubmit={(e) => handleSubmit(e)}
+          className="mt-4 text-center" 
+          name="contact"
+           method="POST" 
+           data-netlify="true"
+          >
             <Row>
               <Col>
+              <input type="hidden" name="form-name" value="contact" />
                 <Form.Control
                  className="form-control"
                  type="text"
