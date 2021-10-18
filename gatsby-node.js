@@ -27,7 +27,7 @@ exports.createPages = async ({ graphql, actions }) => {
 allPosts.data.allWpPost.nodes.forEach(item => {
     createPage({
       path: `/${item.categories.nodes.map(category => category.slug)}/${item.slug}`,
-      component: path.resolve("./src/templates/blogpost.jsx"),
+      component: path.resolve(`${__dirname}/src/templates/blogPost.jsx`),
       context: {
         data: item
       },
