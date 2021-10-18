@@ -3,6 +3,7 @@ import React,{useEffect} from 'react'
 import logo from '../assets/images/logo/logo.png'
 import {Nav, Navbar, Container, Button} from 'react-bootstrap'
 import { Link } from 'react-scroll';
+import {Link as GatsbyLink} from 'gatsby'
 
 const initNetlifyIdentity = () => {
   const script = document.createElement("script");
@@ -31,9 +32,9 @@ const Header = () => {
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <div className="container">
           <Navbar.Brand>
-            <Link to="home" href="home" className="navbar-brand">
+            <GatsbyLink to="/" className="navbar-brand">
               TypoCode
-            </Link>
+            </GatsbyLink>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   
