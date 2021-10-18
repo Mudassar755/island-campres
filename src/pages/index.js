@@ -91,7 +91,7 @@ const IndexPage = () => {
   }
   }
   `)
-  console.log("Dataaaa", data && data.wpPage)
+  // console.log("Dataaaa", data && data.wpPage)
 
   const [formData, setFormData] = useState({
     name: "",
