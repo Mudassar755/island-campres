@@ -28,16 +28,15 @@ const Header = () => {
   useEffect(() => {
     initNetlifyIdentity();
 
-    document.addEventListener("scroll", () => {
-      const topScroll = window.scrollY > 10;
-      topScroll ? setScroll(true) : setScroll(false);
-    });
+    // document.addEventListener("scroll", () => {
+    //   const topScroll = window.scrollY > 10;
+    //   topScroll ? setScroll(true) : setScroll(false);
+    // });
     setPath(window.location.pathname);
   }, [initNetlifyIdentity]);
 
   const data = useStaticQuery(graphql`
     {
-  
       logo: wpMediaItem(title: { eq: "logo" }) {
         srcSet
         sourceUrl
@@ -50,44 +49,80 @@ const Header = () => {
       expand="lg"
       bg={isScroll ? "dark" : "light"}
       variant={isScroll ? "dark" : "light"}
-      sticky="top"
+      // sticky="top"
     >
       <div className="container">
         <Navbar.Brand>
           <GatsbyLink to="/" className="navbar-brand">
-            <img src={data && data.logo.sourceUrl} alt="logo" width="50" height="50" />
+            <img
+              src={data && data.logo.sourceUrl}
+              alt="logo"
+              width="50"
+              height="50"
+            />
             {/* TypoCode */}
           </GatsbyLink>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-
+    
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="navbar-nav ml-auto">
             {path === "/" && (
               <>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <Nav.Link>
                     <Link to="home" className="nav-link">
                       Home
                     </Link>
                   </Nav.Link>
+                </Nav.Item> */}
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="about" className="nav-link">
+                      About Us
+                    </Link>
+                  </Nav.Link>
                 </Nav.Item>
-                <Nav.Link>
-                  <Link to="about" className="nav-link">
-                    About Us
-                  </Link>
-                </Nav.Link>
 
-                <Nav.Link>
-                  <Link to="blog" className="nav-link">
-                    Blogs
-                  </Link>
-                </Nav.Link>
-                <Nav.Link>
-                  <Link to="contact" className="nav-link">
-                    Contact Us
-                  </Link>
-                </Nav.Link>
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="rentals" className="nav-link">
+                      Rentals
+                    </Link>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="tours" className="nav-link">
+                      Tours
+                    </Link>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="blog" className="nav-link">
+                      Blogs
+                    </Link>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="rates" className="nav-link">
+                      Rates
+                    </Link>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="contact" className="nav-link">
+                      Contact Us
+                    </Link>
+                  </Nav.Link>
+                </Nav.Item>
               </>
             )}
 

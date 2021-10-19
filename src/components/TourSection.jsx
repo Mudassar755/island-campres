@@ -28,7 +28,7 @@ const TourSection = () => {
   `);
 //   console.log("data===???", data)
     return (
-        <section className="tour-section">
+        <section className="tour-section" id="tours">
         <Container>
           <h2 className="text-center my-5">Tours</h2>
           {data && data.tours.posts.nodes.length && data.tours.posts.nodes.map((tour) => (

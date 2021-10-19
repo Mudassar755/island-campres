@@ -23,8 +23,9 @@ const Footer = () => {
     <footer className="mt-5 border-top">
       <Container>
         <Row className="justify-content-center">
+          
           <Col xs={12} sm={6} md={4} lg={4} className="mt-3 pl-5">
-            <h5>Contact</h5>
+            <h5>Legal</h5>
             <div className="mt-3">
             {/* <p>
               Home Tow <br />
@@ -48,6 +49,7 @@ const Footer = () => {
             
             </div>
           </Col>
+
           <Col xs={12} sm={6} md={4} lg={4} className="mt-5 pl-5">
             <h5>Follow Us</h5>
             <div className="mt-3">
@@ -59,17 +61,32 @@ const Footer = () => {
                 </span>
             </div>
           </Col>
-          {/* <Col xs={12} sm={6} md={4} lg={4}>
-            <h5>Login\SignUp</h5>
-            <Form className="mt-4">
-              <Form.Control type="email" placeholder="Enter email" className="mt-2" />
 
-              <Form.Control type="password" placeholder="Password" className="mt-2" />
-              <Button variant="outline-dark" type="submit" className="w-100 mt-2">
-                Submit
-              </Button>
-            </Form>
-          </Col> */}
+          <Col xs={12} sm={6} md={4} lg={4} className="mt-3 pl-5">
+          <h5>Contact</h5>
+            <div className="mt-3">
+            <p>
+              Home Tow <br />
+              634 Halvarn Estates Suit 039
+            </p>
+            <p>
+              <span>
+                <img src={phone} />
+              </span>{" "}
+              <strong>8 800 888 80 80</strong>
+            </p>
+            <p>
+              <span>
+                <img src={skype} />
+              </span>{" "}
+              <strong>Logo.Skype</strong>
+            </p>
+            {/* <div>
+              <span>.LOGO</span>
+              <span>&copy; 2021 All Rights Reserved</span>
+            </div> */}
+            </div>
+          </Col>
         </Row>
         <div className="my-5 text-center">
               <span className="mr-2">.LOGO

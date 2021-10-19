@@ -13,10 +13,12 @@ import { Link } from 'react-scroll';
 import Contact from "../components/Contact";
 import BlogSection from "../components/BlogSection";
 import TourSection from "../components/TourSection";
+import { animateScroll as scroll } from "react-scroll";
 // import useInstagram from '../hooks/useInstagram'
 // import "aos/dist/aos.css";
 
 const IndexPage = () => {
+  const [showButton, setShowButton] = useState(false);
   React.useEffect(() => {
     // initNetlifyIdentity()
     AOS.init({
@@ -25,12 +27,20 @@ const IndexPage = () => {
       once: true
     });
     AOS.refresh();
+
+    //Wheelbase script
     var script = document.createElement("script");
-      script.src = "https://d3cuf6g1arkgx6.cloudfront.net/sdk/wheelbase.min.js";
-      script.async = true;
-      document.body.appendChild(script)
+    script.src = "https://d3cuf6g1arkgx6.cloudfront.net/sdk/wheelbase.min.js";
+    script.async = true;
+    document.body.appendChild(script)
 
-
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    });
   }, [])
   const data = useStaticQuery(graphql`
   {
@@ -78,6 +88,7 @@ const IndexPage = () => {
         </Container>
       </section>
 
+      {/* About, Rentals, Tours, Rates, Blog, Contact */}
       {/*===============================================
                     Start About Content Area Design
             ================================================ */}
@@ -102,7 +113,7 @@ const IndexPage = () => {
                     Start Rentals Content Area Design
             ================================================ */}
 
-      <section className="rental-section">
+      <section className="rental-section" id="rentals">
         <Container>
           <h2 className="text-center my-3">Rentlas</h2>
           <div id="outdoorsy-book-now-container" data-owner="2008693" data-newfilters="true" data-calendar="false" data-color="000000"></div>
@@ -118,7 +129,7 @@ const IndexPage = () => {
                  Start Rates Content Area Design
             ================================================ */}
 
-      <section className="reates-section">
+      <section className="reates-section" id="rates">
         <Container>
           <h2 className="text-center my-5">Rates</h2>
           <div className="p-3 w-75 p-sm-1">
@@ -137,13 +148,18 @@ const IndexPage = () => {
           <Row>
             {data.allInstagramContent.nodes.map(post => (
               <Col xs={12} sm={6} md={4} lg={4} >
-              <img src={post.media_url} alt="insta post" className="w-100" />
+                <img src={post.media_url} alt="insta post" className="w-100" />
               </Col>
 
             ))}
-            </Row>
+          </Row>
         </Container>
       </section>
+      {showButton && (
+        <Button variant="dark" onClick={ ()=> scroll.scrollToTop()} className="back-to-top rounded-circle">
+          &#8679;
+        </Button>
+      )}
     </Layout>
   )
 }

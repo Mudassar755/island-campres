@@ -67,6 +67,7 @@ const BlogSection = () => {
                     <Card.Img
                       variant="top"
                       src={blog.featuredImage.node.sourceUrl}
+                      height="400"
                     />
                     <Card.Body>
                       <Card.Title>{blog.title}</Card.Title>
