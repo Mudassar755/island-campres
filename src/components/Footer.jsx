@@ -4,11 +4,23 @@ import phone from "../assets/images/icon/phone.png";
 import skype from "../assets/images/icon/skype.png";
 import fb from "../assets/images/icon/fb-footer.png";
 import insta from "../assets/images/icon/insta-footer.png";
-import {Link} from 'gatsby'
+import {Link, graphql, useStaticQuery} from 'gatsby'
 
 const Footer = () => {
+//   const data = useStaticQuery(graphql`
+//   {
+//     footerLogo: wpMediaItem(title: { eq: "footer-logo" }) {
+//       srcSet
+//       sourceUrl
+//     }
+//     logo: wpMediaItem(title: { eq: "logo" }) {
+//         srcSet
+//         sourceUrl
+//       }
+//   }
+// `);
   return (
-    <footer className="mt-5">
+    <footer className="mt-5 border-top">
       <Container>
         <Row className="justify-content-center">
           <Col xs={12} sm={6} md={4} lg={4} className="mt-3 pl-5">
@@ -60,7 +72,9 @@ const Footer = () => {
           </Col> */}
         </Row>
         <div className="my-5 text-center">
-              <span>.LOGO</span>
+              <span className="mr-2">.LOGO
+                {/* <img src={data && data.footerLogo.sourceUrl} alt="logo" width="30" height="30" /> */}
+                </span>
               <span>&copy; 2021 All Rights Reserved</span>
             </div>
       </Container>

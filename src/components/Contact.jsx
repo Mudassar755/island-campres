@@ -23,7 +23,7 @@ const Contact = () => {
       }
     
       const encode = (data) => {
-        console.log("datataa", data)
+        // console.log("datataa", data)
       return Object.keys(data)
         .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
         .join("&");

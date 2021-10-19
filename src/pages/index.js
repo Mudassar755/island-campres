@@ -47,10 +47,8 @@ const IndexPage = () => {
     }
   }
   allInstagramContent {
-    edges {
-      node {
+      nodes {
         media_url
-      }
     }
   }
   }
@@ -133,6 +131,19 @@ const IndexPage = () => {
 
       <BlogSection />
       <Contact />
+      <section className="insta-section">
+        <Container>
+          <h2 className="text-center my-5">FOLLOW US ON INSTAGRAM</h2>
+          <Row>
+            {data.allInstagramContent.nodes.map(post => (
+              <Col xs={12} sm={6} md={4} lg={4} >
+              <img src={post.media_url} alt="insta post" className="w-100" />
+              </Col>
+
+            ))}
+            </Row>
+        </Container>
+      </section>
     </Layout>
   )
 }

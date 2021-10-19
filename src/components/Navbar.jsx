@@ -1,103 +1,107 @@
 // import { Link } from 'gatsby'
-import React,{useEffect} from 'react'
-import logo from '../assets/images/logo/logo.png'
-import {Nav, Navbar, Container, Button} from 'react-bootstrap'
-import { Link } from 'react-scroll';
-import {Link as GatsbyLink} from 'gatsby'
+import React, { useEffect, useState } from "react";
+import logo from "../assets/images/logo/logo.png";
+import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import { Link } from "react-scroll";
+import { Link as GatsbyLink, graphql, useStaticQuery } from "gatsby";
 
 const initNetlifyIdentity = () => {
   const script = document.createElement("script");
   script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
   script.async = true;
-  document.body.appendChild(script)
-  console.log("netlifyIdentity")
-}
+  document.body.appendChild(script);
+  // console.log("netlifyIdentity");
+};
 const openNetlifyModal = () => {
   const netlifyIdentity = window.netlifyIdentity;
-  
-  if(netlifyIdentity){
-    netlifyIdentity.open()
-  }else{
-    console.log("netlifyIdentity is not defined")
-  }
 
-}
+  if (netlifyIdentity) {
+    netlifyIdentity.open();
+  } else {
+    console.log("netlifyIdentity is not defined");
+  }
+};
 
 const Header = () => {
+  const [isScroll, setScroll] = useState(false);
+  const [path, setPath] = useState("");
   useEffect(() => {
-    initNetlifyIdentity()
+    initNetlifyIdentity();
 
-  },[initNetlifyIdentity])
-    return (
-        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <div className="container">
-          <Navbar.Brand>
-            <GatsbyLink to="/" className="navbar-brand">
-              TypoCode
-            </GatsbyLink>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    document.addEventListener("scroll", () => {
+      const topScroll = window.scrollY > 10;
+      topScroll ? setScroll(true) : setScroll(false);
+    });
+    setPath(window.location.pathname);
+  }, [initNetlifyIdentity]);
+
+  const data = useStaticQuery(graphql`
+    {
   
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="navbar-nav ml-auto">
-              <Nav.Item>
+      logo: wpMediaItem(title: { eq: "logo" }) {
+        srcSet
+        sourceUrl
+      }
+    }
+  `);
+  return (
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg={isScroll ? "dark" : "light"}
+      variant={isScroll ? "dark" : "light"}
+      sticky="top"
+    >
+      <div className="container">
+        <Navbar.Brand>
+          <GatsbyLink to="/" className="navbar-brand">
+            <img src={data && data.logo.sourceUrl} alt="logo" width="50" height="50" />
+            {/* TypoCode */}
+          </GatsbyLink>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="navbar-nav ml-auto">
+            {path === "/" && (
+              <>
+                <Nav.Item>
+                  <Nav.Link>
+                    <Link to="home" className="nav-link">
+                      Home
+                    </Link>
+                  </Nav.Link>
+                </Nav.Item>
                 <Nav.Link>
-                  {" "}
-                  <Link to="home" className="nav-link">
-                    Home
+                  <Link to="about" className="nav-link">
+                    About Us
                   </Link>
                 </Nav.Link>
-              </Nav.Item>
-              <Nav.Link>
-                {" "}
-                <Link to="about" className="nav-link">
-                  About Us
-                </Link>
-              </Nav.Link>
-              {/* <Nav.Link >
-                {" "}
-                <Link to="/services" className="nav-link">
-                  Services
-                </Link>
-              </Nav.Link> */}
-              <Nav.Link>
-                {" "}
-                <Link to="blog" className="nav-link">
-                  Blogs
-                </Link>
-              </Nav.Link>
-              <Nav.Link>
-                {" "}
-                <Link to="contact" className="nav-link">
-                  Contact Us
-                </Link>
-              </Nav.Link>
-  
-              {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown> */}
-              <Button variant="outline-dark" onClick={() => openNetlifyModal()}>Login / Signup</Button>
-            </Nav>
-            {/* <Nav>
-              <Nav.Link href="#deets">More deets</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                Dank memes
-              </Nav.Link>
-            </Nav> */}
-          </Navbar.Collapse>
-         
-         
-        </div>
-      </Navbar>
-    )
-}
 
-export default Header
+                <Nav.Link>
+                  <Link to="blog" className="nav-link">
+                    Blogs
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link to="contact" className="nav-link">
+                    Contact Us
+                  </Link>
+                </Nav.Link>
+              </>
+            )}
+
+            <Button
+              variant={isScroll ? "outline-light" : "outline-dark"}
+              onClick={() => openNetlifyModal()}
+            >
+              Login / Signup
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      </div>
+    </Navbar>
+  );
+};
+
+export default Header;

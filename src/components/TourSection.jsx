@@ -26,7 +26,7 @@ const TourSection = () => {
       }
     }
   `);
-  console.log("data===???", data)
+//   console.log("data===???", data)
     return (
         <section className="tour-section">
         <Container>
