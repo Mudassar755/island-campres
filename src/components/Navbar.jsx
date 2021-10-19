@@ -55,7 +55,7 @@ const Header = () => {
         <Navbar.Brand>
           <GatsbyLink to="/" className="navbar-brand">
             <img
-              src={data && data.logo.sourceUrl}
+              src={data && data.logo && data.logo.sourceUrl}
               alt="logo"
               width="50"
               height="50"
